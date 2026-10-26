@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Grab Wallet Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ink:#101418; --text:#2B3138; --slate:#56606B; --line:#D9DCDF; --stone:#ECEDEE; --paper:#F7F8F8; --white:#FFFFFF;
+  --night:#0A0C0F; --nightText:#E9ECEF; --nightMute:#A7AFB8; --brand:#1C2B40; --accent:#9AA6B4;
+  --good:#1F5130; --goodBg:#E3EFE6; --warn:#6B4E12; --warnBg:#F3EBD9; --bad:#8A1C1C; --badBg:#F8E1E1;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --body:"Public Sans","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box} [hidden]{display:none !important}
+body{margin:0; background:var(--paper); color:var(--text); font:15px/1.5 var(--body)}
+button,input,select,textarea{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.top{background:var(--night); color:var(--nightText); border-bottom:3px solid var(--brand)}
+.top .in{display:flex; flex-wrap:wrap; gap:10px 20px; align-items:center; justify-content:space-between; padding:12px 16px; max-width:1280px; margin:0 auto}
+.mark{display:flex; align-items:center; gap:10px}
+.mark i{width:24px; height:24px; border-radius:6px; background:var(--brand); border:2px solid var(--accent)}
+.mark b{font:700 20px/1 var(--display); letter-spacing:.06em}
+.mark span{font:600 11px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--nightMute)}
+.who{display:flex; gap:14px; align-items:center; font-size:13px; color:var(--nightMute)}
+.who button{all:unset; cursor:pointer; color:var(--nightText); font-weight:600; text-decoration:underline; text-underline-offset:4px}
+main{max-width:1280px; margin:0 auto; padding:28px 16px 64px}
+h1,h2{font-family:var(--display); text-transform:uppercase; color:var(--ink); margin:0; line-height:1}
+h1{font-size:40px} h2{font-size:24px}
+.card{background:var(--white); border:1px solid var(--line); padding:24px}
+.signin{max-width:440px; margin:8vh auto 0; display:grid; gap:16px}
+.signin p{margin:0; color:var(--slate)}
+label{display:grid; gap:6px; font-weight:600; font-size:14px; color:var(--ink)}
+input[type=email],input[type=search],select,textarea{min-height:44px; padding:8px 12px; border:1px solid #9aa2ab; border-radius:2px; background:var(--white); color:var(--ink)}
+textarea{min-height:120px; resize:vertical}
+.btn{min-height:44px; padding:0 18px; border:1px solid var(--ink); border-radius:2px; background:var(--ink); color:var(--white); font-weight:600; cursor:pointer}
+.btn.ghost{background:var(--white); color:var(--ink)}
+.btn[disabled]{opacity:.5; cursor:default}
+.msg{margin:0; padding:10px 12px; border-left:3px solid var(--accent); background:var(--stone); color:var(--text)}
+.msg.bad{border-color:var(--bad); background:var(--badBg); color:var(--bad)}
+.head{display:flex; flex-wrap:wrap; gap:12px 24px; align-items:end; justify-content:space-between; margin-bottom:20px}
+.head p{margin:6px 0 0; color:var(--slate)}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); gap:12px; margin-bottom:20px}
+.stat{background:var(--white); border:1px solid var(--line); border-top:3px solid var(--brand); padding:16px 18px}
+.stat b{display:block; font:700 34px/1 var(--display); color:var(--ink); font-variant-numeric:tabular-nums}
+.stat span{font:600 12px/1.3 var(--body); letter-spacing:.08em; text-transform:uppercase; color:var(--slate)}
+.filters{display:flex; flex-wrap:wrap; gap:12px; align-items:end; margin-bottom:14px}
+.filters label{flex:1 1 160px}
+.filters label.grow{flex:3 1 260px}
+.actions{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px}
+.actions .count{color:var(--slate); font-size:14px; margin-right:auto}
+.tablewrap{background:var(--white); border:1px solid var(--line); overflow-x:auto}
+table{width:100%; border-collapse:collapse; min-width:980px; font-size:14px}
+th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--stone); vertical-align:middle}
+th{font:600 11px/1 var(--body); letter-spacing:.12em; text-transform:uppercase; color:var(--slate); background:var(--paper); position:sticky; top:0}
+tbody tr{cursor:pointer} tbody tr:hover{background:#F2F4F6}
+td.num{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--slate)}
+.name{font-weight:600; color:var(--ink)}
+.pill{display:inline-block; font:600 11px/1 var(--body); letter-spacing:.08em; text-transform:uppercase; padding:5px 8px; border-radius:999px; white-space:nowrap}
+.s-New{background:#E4EAF3; color:#1C2B40} .s-Contacted{background:var(--warnBg); color:var(--warn)} .s-Qualified{background:var(--goodBg); color:var(--good)} .s-Not{background:var(--stone); color:var(--slate)}
+.empty{padding:40px 16px; text-align:center; color:var(--slate)}
+.drawer{position:fixed; inset:0 0 0 auto; width:min(100%,440px); background:var(--white); border-left:1px solid var(--line); box-shadow:-20px 0 40px -20px rgba(16,20,24,.35); padding:22px; overflow-y:auto; display:grid; gap:16px; align-content:start; z-index:20}
+.drawer .x{justify-self:end; all:unset; cursor:pointer; font-weight:600; text-decoration:underline; text-underline-offset:4px}
+dl{display:grid; grid-template-columns:120px 1fr; gap:8px 12px; margin:0; font-size:14px}
+dt{color:var(--slate)} dd{margin:0; color:var(--ink); word-break:break-word}
+.scrim{position:fixed; inset:0; background:rgba(16,20,24,.25); z-index:19}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <div class="mark"><i aria-hidden="true"></i><b>GRAB WALLET</b><span>Admin</span></div>
+  <div class="who" id="who" hidden><span id="whoEmail"></span><button type="button" id="signOut">Sign out</button></div>
+</div></header>
+
+<main>
+  <!-- Not configured -->
+  <section class="card signin" id="vConfig" hidden>
+    <h2>Almost ready</h2>
+    <p>Add the Supabase project URL and anon key at the top of this page's script to connect it.</p>
+  </section>
+
+  <!-- Sign in -->
+  <section class="card signin" id="vSignin" hidden>
+    <h1>Team sign in</h1>
+    <p>Enter your work email. We'll send a one-time sign-in link. Only invited team members can sign in.</p>
+    <form id="signinForm" class="signin" style="margin:0">
+      <label for="email">Work email<input type="email" id="email" autocomplete="email" required></label>
+      <button class="btn" type="submit" id="sendLink">Email me a sign-in link</button>
+    </form>
+    <p class="msg" id="signinMsg" hidden role="status"></p>
+  </section>
+
+  <!-- No access -->
+  <section class="card signin" id="vDenied" hidden>
+    <h2>No access</h2>
+    <p>You're signed in, but this account isn't on the admin list. Ask an existing admin to add you.</p>
+  </section>
+
+  <!-- Dashboard -->
+  <section id="vApp" hidden>
+    <div class="head">
+      <div><h1>Leads</h1><p>Everyone who filled in "Bring Grab Wallet to your school."</p></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stTotal">0</b><span>Total leads</span></div>
+      <div class="stat"><b id="stNew">0</b><span>New, not contacted</span></div>
+      <div class="stat"><b id="stWeek">0</b><span>Last 7 days</span></div>
+      <div class="stat"><b id="stUnexported">0</b><span>Not yet in Zoho</span></div>
+    </div>
+    <div class="filters">
+      <label class="grow" for="q">Search<input type="search" id="q" placeholder="Name, organization or email"></label>
+      <label for="fRole">Role<select id="fRole"><option value="">All roles</option><option>Athletic Director</option><option>Coach</option><option>Booster Club</option><option>Principal/President</option><option>Parent</option><option>Local Business</option></select></label>
+      <label for="fStatus">Status<select id="fStatus"><option value="">All statuses</option><option>New</option><option>Contacted</option><option>Qualified</option><option>Not a fit</option></select></label>
+      <label for="fProduct">Product line<select id="fProduct"><option value="">All products</option><option>SchoolWallet</option><option>ClubWallet</option><option>TeamWallet</option><option>ChurchWallet</option></select></label>
+      <label for="fRange">Submitted<select id="fRange"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select></label>
+      <label for="fExport">Zoho<select id="fExport"><option value="">All</option><option value="no">Not yet exported</option><option value="yes">Exported</option></select></label>
+    </div>
+    <div class="actions">
+      <span class="count" id="count" aria-live="polite"></span>
+      <button class="btn ghost" type="button" id="refresh">Refresh</button>
+      <button class="btn" type="button" id="exportBtn">Export these to CSV for Zoho</button>
+    </div>
+    <p class="msg" id="appMsg" hidden role="status"></p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Submitted</th><th>Name</th><th>Organization</th><th>Role</th><th>Email</th><th>Phone</th><th>Texts</th><th>Status</th><th>Zoho</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>No leads match these filters.</p>
+    </div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-labelledby="dName" role="dialog">
+  <button class="x" type="button" id="closeDrawer">Close</button>
+  <h2 id="dName"></h2>
+  <dl id="dList"></dl>
+  <label for="dStatus">Status<select id="dStatus"><option>New</option><option>Contacted</option><option>Qualified</option><option>Not a fit</option></select></label>
+  <label for="dNotes">Team notes<textarea id="dNotes" maxlength="4000" placeholder="Call notes, next steps"></textarea></label>
+  <div style="display:flex; gap:10px; flex-wrap:wrap">
+    <button class="btn" type="button" id="dSave">Save</button>
+    <button class="btn ghost" type="button" id="dUnexport" hidden>Mark as not exported</button>
+  </div>
+  <p class="msg" id="dMsg" hidden role="status"></p>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  // Same project as the public site (Project Settings > API).
+  const SUPABASE_URL='';       // e.g. https://abcdxyz.supabase.co
+  const SUPABASE_ANON_KEY='';
+
+  const $=id=>document.getElementById(id);
+  const views=['vConfig','vSignin','vDenied','vApp'];
+  function show(v){views.forEach(x=>$(x).hidden=(x!==v));}
+  function note(el,text,bad){el.textContent=text; el.classList.toggle('bad',!!bad); el.hidden=!text;}
+
+  if(!SUPABASE_URL||!SUPABASE_ANON_KEY||!window.supabase){ show('vConfig'); return; }
+  const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,detectSessionInUrl:true}});
+
+  // ---- Auth ----
+  $('signinForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const email=$('email').value.trim().toLowerCase(); if(!email) return;
+    $('sendLink').disabled=true;
+    const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:location.origin+location.pathname}});
+    $('sendLink').disabled=false;
+    // Same message either way, so the page never reveals who is on the team.
+    note($('signinMsg'), error&&!/not found|signups not allowed|otp/i.test(error.message) ? 'Something went wrong sending the link. Try again in a minute.' : 'If that email belongs to a team member, a sign-in link is on its way. It works once and expires in an hour.', false);
+  });
+  $('signOut').addEventListener('click',async()=>{await sb.auth.signOut(); location.replace(location.pathname);});
+
+  let started=false;
+  async function route(session){
+    if(!session){ $('who').hidden=true; show('vSignin'); return; }
+    $('who').hidden=false; $('whoEmail').textContent=session.user.email||'';
+    const {data:isAdmin,error}=await sb.rpc('is_admin');
+    if(error||!isAdmin){ show('vDenied'); return; }
+    show('vApp'); if(!started){ started=true; load(); }
+  }
+  sb.auth.getSession().then(({data})=>route(data.session));
+  sb.auth.onAuthStateChange((_e,session)=>route(session));
+
+  // ---- Data ----
+  let all=[], view=[];
+  const fmtDate=d=>new Date(d).toLocaleString(undefined,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+  async function load(){
+    note($('appMsg'),'');
+    const rows=[]; const page=1000;
+    for(let from=0;;from+=page){
+      const {data,error}=await sb.from('leads').select('*').order('created_at',{ascending:false}).range(from,from+page-1);
+      if(error){ note($('appMsg'),'Couldn\'t load leads: '+error.message,true); return; }
+      rows.push(...data); if(data.length<page) break;
+    }
+    all=rows; render();
+  }
+  function applyFilters(){
+    const q=$('q').value.trim().toLowerCase(), role=$('fRole').value, st=$('fStatus').value, pl=$('fProduct').value, days=+$('fRange').value, ex=$('fExport').value;
+    const since=days?Date.now()-days*864e5:0;
+    return all.filter(l=>(!q||[l.first_name,l.last_name,l.company,l.email].join(' ').toLowerCase().includes(q))
+      &&(!role||l.role===role)&&(!st||l.status===st)&&(!pl||l.product_line===pl)
+      &&(!since||new Date(l.created_at).getTime()>=since)&&(!ex||(ex==='yes')===!!l.exported_at));
+  }
+  function render(){
+    const week=Date.now()-7*864e5;
+    $('stTotal').textContent=all.length;
+    $('stNew').textContent=all.filter(l=>l.status==='New').length;
+    $('stWeek').textContent=all.filter(l=>new Date(l.created_at).getTime()>=week).length;
+    $('stUnexported').textContent=all.filter(l=>!l.exported_at).length;
+    view=applyFilters();
+    $('count').textContent=view.length+' of '+all.length+' leads';
+    $('exportBtn').disabled=!view.length;
+    const tb=$('rows'); tb.textContent='';
+    view.forEach(l=>{
+      const tr=document.createElement('tr'); tr.tabIndex=0;
+      const cells=[[fmtDate(l.created_at),'num'],[l.first_name+' '+l.last_name,'name'],[l.company],[l.role],[l.email],[l.phone||'—','num'],[l.sms_opt_in?'Yes':'No']];
+      cells.forEach(([v,c])=>{const td=document.createElement('td'); td.textContent=v; if(c) td.className=c; tr.appendChild(td);});
+      const tdS=document.createElement('td'); const p=document.createElement('span'); p.className='pill s-'+l.status.split(' ')[0]; p.textContent=l.status; tdS.appendChild(p); tr.appendChild(tdS);
+      const tdE=document.createElement('td'); tdE.className='num'; tdE.textContent=l.exported_at?new Date(l.exported_at).toLocaleDateString():'—'; tr.appendChild(tdE);
+      tr.addEventListener('click',()=>openDrawer(l)); tr.addEventListener('keydown',e=>{if(e.key==='Enter') openDrawer(l);});
+      tb.appendChild(tr);
+    });
+    $('empty').hidden=!!view.length||!all.length;
+  }
+  ['q','fRole','fStatus','fProduct','fRange','fExport'].forEach(id=>$(id).addEventListener('input',render));
+  $('refresh').addEventListener('click',load);
+
+  // ---- Lead detail ----
+  let cur=null;
+  function openDrawer(l){
+    cur=l; $('dName').textContent=l.first_name+' '+l.last_name;
+    const dl=$('dList'); dl.textContent='';
+    [['Organization',l.company],['Role',l.role],['Email',l.email],['Phone',l.phone||'—'],['Texts',l.sms_opt_in?'Opted in':'No'],['Product line',l.product_line],['Source',l.lead_source],['Submitted',fmtDate(l.created_at)],['From page',l.page_url||'—'],['In Zoho',l.exported_at?fmtDate(l.exported_at):'Not yet exported']]
+      .forEach(([k,v])=>{const dt=document.createElement('dt'); dt.textContent=k; const dd=document.createElement('dd'); dd.textContent=v; dl.append(dt,dd);});
+    $('dStatus').value=l.status; $('dNotes').value=l.notes||''; $('dUnexport').hidden=!l.exported_at; note($('dMsg'),'');
+    $('drawer').hidden=false; $('scrim').hidden=false; $('dStatus').focus();
+  }
+  function closeDrawer(){ $('drawer').hidden=true; $('scrim').hidden=true; cur=null; }
+  $('closeDrawer').addEventListener('click',closeDrawer); $('scrim').addEventListener('click',closeDrawer);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('drawer').hidden) closeDrawer();});
+  async function patch(fields){
+    const {data,error}=await sb.from('leads').update(fields).eq('id',cur.id).select().single();
+    if(error){ note($('dMsg'),'Couldn\'t save: '+error.message,true); return; }
+    const i=all.findIndex(x=>x.id===data.id); if(i>=0) all[i]=data; cur=data; render(); openDrawer(data); note($('dMsg'),'Saved.');
+  }
+  $('dSave').addEventListener('click',()=>patch({status:$('dStatus').value, notes:$('dNotes').value.trim()||null}));
+  $('dUnexport').addEventListener('click',()=>patch({exported_at:null}));
+
+  // ---- Zoho CSV export ----
+  // Column names follow Zoho CRM's standard Leads fields so the import maps automatically.
+  // Role, SMS Opt-In and Product Line need matching custom fields in Zoho.
+  const COLS=[['First Name',l=>l.first_name],['Last Name',l=>l.last_name],['Company',l=>l.company],['Email',l=>l.email],['Phone',l=>l.phone],
+    ['Role',l=>l.role],['SMS Opt-In',l=>l.sms_opt_in?'true':'false'],['Product Line',l=>l.product_line],['Lead Source',l=>l.lead_source],
+    ['Lead Status',l=>l.status],['Description',l=>l.notes],['Submitted At',l=>l.created_at]];
+  const cell=v=>{v=v==null?'':String(v); if(/^[=+\-@\t\r]/.test(v)) v="'"+v; return /[",\r\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+  $('exportBtn').addEventListener('click',async()=>{
+    if(!view.length) return;
+    const rows=view.slice();
+    const csv='﻿'+[COLS.map(c=>c[0]).join(',')].concat(rows.map(l=>COLS.map(([,f])=>cell(f(l))).join(','))).join('\r\n');
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    a.download='grab-wallet-leads-'+new Date().toISOString().slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+    const fresh=rows.filter(l=>!l.exported_at).map(l=>l.id);
+    if(fresh.length&&confirm('Mark '+fresh.length+' lead'+(fresh.length>1?'s':'')+' as exported to Zoho?')){
+      const {error}=await sb.from('leads').update({exported_at:new Date().toISOString()}).in('id',fresh);
+      if(error) note($('appMsg'),'The file downloaded, but marking leads as exported failed: '+error.message,true); else load();
+    }
+  });
+})();
+</script>
+</body>
+</html>
