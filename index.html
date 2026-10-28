@@ -94,6 +94,24 @@ p{margin:0}
 /* sections */
 .sec{padding-block:clamp(72px,10vw,128px)}
 .sec.white{background:var(--white)}
+.mission{background:color-mix(in srgb, var(--sc1) 28%, #07090C); color:var(--nightText); transition:background .4s}
+.mission .lbl{color:var(--nightMute)}
+.mission h2{color:#FFFFFF; max-width:24ch}
+.mgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:28px clamp(36px,6vw,80px); align-items:end; margin-top:32px}
+.mission .lead{color:var(--nightMute)}
+.m365{display:flex; align-items:baseline; gap:16px; border-left:3px solid var(--sc2); padding-left:20px}
+.m365 b{font:700 clamp(64px,8vw,104px)/.9 var(--display); color:#FFFFFF; font-variant-numeric:tabular-nums}
+.m365 span{font:500 16px/1.45 var(--body); color:var(--nightMute); max-width:22ch}
+.mwho{list-style:none; margin:40px 0 0; padding:18px 0 0; border-top:1px solid rgba(255,255,255,.18); display:flex; flex-wrap:wrap; gap:10px 28px}
+.mwho li{font:600 13px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--nightText)}
+.mfull{margin-top:28px; max-width:780px}
+.mfull summary{cursor:pointer; display:inline-flex; align-items:center; min-height:44px; font-weight:600; color:var(--nightText); text-decoration:underline; text-underline-offset:6px; text-decoration-color:var(--sc2)}
+.mfull summary::-webkit-details-marker{display:none}
+.mfull summary::after{content:"+"; margin-left:10px; font-weight:400; font-size:20px; text-decoration:none}
+.mfull[open] summary::after{content:"\2212"}
+.mfull div{display:grid; gap:14px; margin-top:10px}
+.mfull p{font:400 17px/1.65 var(--serif); color:var(--nightText)}
+
 .sec.stone{background:color-mix(in srgb, var(--sc1) 7%, #EEF0F1)}
 .trust{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:0; margin-top:52px; border-top:1px solid var(--ink)}
 .trust div{padding:26px 26px 0 0; display:flex; flex-direction:column; gap:10px; min-width:0}
@@ -279,6 +297,27 @@ p{margin:0}
     <div class="chap" data-i="6"><p class="k">For the whole athletic department</p><h2>Every sport. One card.</h2><p>Not just football. One program, one card, every team on campus, all year.</p><div class="acts"><a class="primary" href="#start">Bring it to your school</a><a class="textlink" href="#trust">See why schools sign</a></div></div>
     <div class="prog" aria-hidden="true"><span id="bar"></span></div>
     <p class="loading" id="loading" hidden>Loading film…</p>
+  </div>
+</section>
+
+<section class="sec mission gut" id="mission">
+  <div class="in">
+    <p class="lbl">Our mission</p>
+    <h2>Every fan matters.<br>Every tap creates opportunity.<br>Every day is a chance to make an impact.</h2>
+    <div class="mgrid">
+      <p class="lead">At Grab, we're reinventing fundraising through fanraising: turning the everyday ways fans already engage into ongoing support for the schools, teams and programs they love. It goes beyond traditional campaigns, seasonal events and one-time asks.</p>
+      <div class="m365"><b>365</b><span>days a year. Fanraising keeps working long after the season ends.</span></div>
+    </div>
+    <ul class="mwho" aria-label="Who GrabWallet connects"><li>Fans</li><li>Athletes</li><li>Schools</li><li>Teams</li><li>Clubs</li><li>Businesses</li><li>Communities</li></ul>
+    <details class="mfull">
+      <summary>Read our full mission</summary>
+      <div>
+        <p>At Grab, our mission is to revolutionize fundraising through the power of fanraising, transforming everyday digital interactions into meaningful financial opportunities. Through GrabWallet and Grab TV, we connect fans, athletes, schools, sports teams, clubs, businesses, and communities through an innovative digital ecosystem designed to turn engagement into ongoing financial support.</p>
+        <p>We believe fundraising should go beyond traditional campaigns, seasonal events, and one-time contributions. We believe in the power of fans&mdash;their passion, loyalty, participation, and influence&mdash;to create lasting opportunities for the people, teams, and organizations they support.</p>
+        <p>Our goal is to build a platform where fanraising becomes part of everyday life, empowering supporters to make a difference through everyday engagement and creating opportunities to generate funds 365 days a year.</p>
+        <p>At Grab, every fan matters, every tap creates opportunity, and every day is a chance to make an impact.</p>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -525,7 +564,7 @@ p{margin:0}
 <footer class="foot gut">
   <div class="in">
     <div><img src="media/grabwallet-logo-dark.png" alt="GrabWallet" width="126" height="24" style="display:block;margin-bottom:12px">A Grab Holdings company.</div>
-    <div><b>Explore</b>Why schools · Your card · The wallet · Families · Merchants</div>
+    <div><b>Explore</b><a href="#mission" style="text-decoration:none">Our mission</a> · Why schools · Your card · The wallet · Families · Merchants</div>
     
     <div><b>Legal</b>Privacy · Terms</div>
   </div>
