@@ -1,5 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"></head><body style="margin:0">
-<title>Grab Wallet High Schools</title>
+<title>GrabWallet High Schools</title>
+<link rel="icon" type="image/png" href="media/favicon-64.png">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
@@ -34,9 +36,8 @@ p{margin:0}
 .strip{position:sticky; top:env(safe-area-inset-top,0px); z-index:25; background:var(--night); color:var(--nightMute); font:500 12px/1 var(--body); letter-spacing:.08em; text-transform:uppercase; text-align:center; padding-block:8px}
 .nav{position:sticky; top:calc(env(safe-area-inset-top,0px) + 28px); z-index:24; background:rgba(10,12,15,.86); backdrop-filter:blur(8px); color:var(--nightText); border-bottom:3px solid var(--sc1); transition:border-color .4s}
 .nav .in{display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px; padding-block:12px}
-.mark{display:flex; align-items:center; gap:10px; text-decoration:none}
-.mark i{width:26px; height:26px; border-radius:6px; background:var(--sc1); border:2px solid var(--sc2); display:block}
-.mark b{font:700 22px/1 var(--display); letter-spacing:.06em}
+.mark{display:flex; align-items:center; gap:10px; text-decoration:none; flex:none}
+.mark img{height:28px; width:auto; display:block; flex:none}
 .mark span{font:600 11px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--nightMute)}
 .nav nav{display:flex; flex-wrap:wrap; gap:4px 20px; flex:1}
 .nav nav a{text-decoration:none; font-size:14px; font-weight:500; color:var(--nightMute)}
@@ -104,7 +105,7 @@ p{margin:0}
 .card > *{position:relative}
 .card .top{display:flex; justify-content:space-between; align-items:flex-start}
 .card .school{font:700 26px/1 var(--display); letter-spacing:.04em; text-transform:uppercase; max-width:70%}
-.card .gw{font:600 11px/1 var(--body); letter-spacing:.18em; text-transform:uppercase; color:var(--ink); background:rgba(255,255,255,.85); padding:6px 8px; border-radius:3px}
+.card .gw{display:inline-flex; align-items:center; gap:6px; font:700 12px/1 var(--body); letter-spacing:.01em; color:var(--ink); background:rgba(255,255,255,.9); padding:6px 9px 6px 7px; border-radius:4px; white-space:nowrap}
 .card .chip{width:46px; height:34px; border-radius:6px; background:linear-gradient(135deg,#D8D2BE,#A9A28C)}
 .card .bottom{display:flex; justify-content:space-between; align-items:flex-end; font:500 13px/1.2 var(--body); letter-spacing:.12em; text-transform:uppercase}
 .picker{display:grid; gap:16px; margin-top:28px; max-width:520px}
@@ -128,11 +129,24 @@ p{margin:0}
 .phases li::before{content:"Phase " counter(p); font:600 12px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--slate)}
 .phases b{font:600 22px/1.05 var(--display); text-transform:uppercase; color:var(--ink)}
 .phases span{font-size:14px; color:var(--slate)}
-.mosaic{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:12px; margin-top:48px}
-.mosaic figure{margin:0; display:flex; flex-direction:column; gap:12px}
-.mosaic img{width:100%; aspect-ratio:4/5; object-fit:cover; display:block}
-.mosaic figcaption{font:600 20px/1 var(--display); text-transform:uppercase; color:var(--ink)}
-.mosaic figcaption span{display:block; font:400 15px/1.45 var(--body); text-transform:none; color:var(--slate); margin-top:6px}
+.standsfig{margin:48px 0 0}
+.standsfig img{width:100%; aspect-ratio:21/9; object-fit:cover; display:block}
+.teamshead{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 24px; margin:56px 0 18px; border-top:1px solid var(--ink); padding-top:18px}
+.teamshead h3{font-size:32px}
+.teamshead p{color:var(--slate); font:400 17px/1.5 var(--serif)}
+.teams{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+.teams figure{margin:0; position:relative; overflow:hidden; background:var(--night); aspect-ratio:4/5}
+.teams img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease}
+.teams figure:hover img{transform:scale(1.035)}
+.teams figcaption{position:absolute; left:0; right:0; bottom:0; padding:44px 16px 14px; background:linear-gradient(0deg, rgba(10,12,15,.82), rgba(10,12,15,0)); color:#FFFFFF; font:600 21px/1 var(--display); text-transform:uppercase; letter-spacing:.02em}
+.teams figcaption span{display:block; font:400 14px/1.4 var(--body); text-transform:none; letter-spacing:0; color:var(--nightText); margin-top:6px}
+.teams .t-track{grid-column:span 2; grid-row:span 2; aspect-ratio:auto}
+.teams .t-spirit{grid-column:span 2; aspect-ratio:auto; min-height:220px}
+.t-cta{grid-column:span 2; display:flex; flex-direction:column; justify-content:center; gap:8px; padding:24px 26px; background:var(--sc1); color:var(--scInk); text-decoration:none; transition:background .4s}
+.t-cta b{font:700 30px/1 var(--display); text-transform:uppercase}
+.t-cta span{font:400 16px/1.45 var(--body); opacity:.9}
+.t-cta em{font-style:normal; font-weight:700; text-decoration:underline; text-underline-offset:5px; text-decoration-color:var(--sc2); margin-top:6px}
+@media (max-width:760px){.teams{grid-template-columns:repeat(2,1fr)} .teams .t-track{grid-row:span 1; aspect-ratio:1/1} .teams .t-spirit{aspect-ratio:16/9; min-height:0} .standsfig img{aspect-ratio:4/3} .teams figcaption{font-size:18px; padding:36px 12px 12px}}
 .tiers{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:0; margin-top:40px; border:1px solid var(--ink); background:var(--white)}
 .tiers div{padding:24px; display:flex; flex-direction:column; gap:8px}
 .tiers div + div{border-left:1px solid var(--line)}
@@ -226,14 +240,14 @@ p{margin:0}
 .pill.yes{background:#E3EFE6; color:#1F5130}
 .pill.pend{background:#F3EBD9; color:#6B4E12}
 @media (min-width:1100px){.hud{top:auto; left:auto; bottom:44px; right:max(16px,3vw); justify-content:flex-end}}
-@media (max-width:760px){.rail{display:none} .chap{bottom:10vh} .qs .a{padding-left:0} .hud{top:calc(env(safe-area-inset-top,0px) + 150px)} .sports button{padding:0 11px; font-size:14px} .chap h1,.chap h2{font-size:clamp(38px,11vw,56px)}}
+@media (max-width:760px){.nav nav{display:none} .nav .in{justify-content:space-between} .mark span{display:none} .rail{display:none} .chap{bottom:10vh} .qs .a{padding-left:0} .hud{top:calc(env(safe-area-inset-top,0px) + 112px)} .sports button{padding:0 11px; font-size:14px} .chap h1,.chap h2{font-size:clamp(38px,11vw,56px)}}
 @media (prefers-reduced-motion: reduce){.chap,.scene{transition:none} .flashes{display:none}}
 </style>
 
 <div class="strip gut">Preview for the Grab Holdings team · Not a live offer</div>
 <header class="nav gut">
   <div class="in">
-    <a class="mark" href="#top"><i aria-hidden="true"></i><b>GRAB WALLET</b><span>High Schools</span></a>
+    <a class="mark" href="#top"><img src="media/grabwallet-logo-dark.png" alt="GrabWallet" width="147" height="28"><span>High Schools</span></a>
     <nav aria-label="Site"><a href="#trust">Why schools</a><a href="#tap">Try a tap</a><a href="#compare">A season</a><a href="#questions">5 questions</a><a href="#yours">Your card</a><a href="#products">The wallet</a><a href="#schools">How it works</a><a href="#community">Families</a><a href="#merchants">Merchants</a></nav>
     <a class="callbtn" href="#start">Book a call</a>
   </div>
@@ -252,7 +266,7 @@ p{margin:0}
       <button type="button" class="cheer" id="cheer">Make some noise</button>
     </div>
     <div class="chap on" data-i="0">
-      <p class="k">Grab Wallet for high school programs</p>
+      <p class="k">GrabWallet for high school programs</p>
       <h1>Every tap funds the team.</h1>
       <p>A rewards card for the families, alumni and fans around your program. They shop where they already shop, and your program earns at every reward partner.</p>
       <div class="acts"><a class="primary" href="#start">Bring it to your school</a><a class="textlink" href="#yours">See it in your colors</a></div>
@@ -261,7 +275,7 @@ p{margin:0}
     <div class="chap" data-i="2"><p class="k">How a tap works</p><h2>One tap at the snack bar.</h2><p>The partner funds a reward on the purchase. The family keeps its share, and the program gets its share.</p><div class="steps"><span>Tap</span><span>Reward</span><span>Split</span><span>Payout</span></div></div>
     <div class="chap" data-i="3"><p class="k">Winter, in the gym</p><h2>Same parent. Same card.</h2><p>Basketball season starts and nothing restarts. No new sign-ups, no new asks. The card he carried on Friday night works at the gym's concession stand too.</p></div>
     <div class="chap" data-i="4"><p class="k">Built for the whole community</p><h2>Every seat in the gym can carry one.</h2><p>Parents, grandparents, alumni and local fans each hold their own card, and every one of them backs the same program.</p></div>
-    <div class="chap" data-i="5"><p class="k">Spring, in the sun</p><h2>Girls' softball counts too.</h2><p>Boys' and girls' teams, fall, winter and spring. Every tap at the snack bar, and every coffee on the way to the game, keeps earning.</p></div>
+    <div class="chap" data-i="5"><p class="k">Spring, in the sun</p><h2>Every team, every season.</h2><p>Fall, winter and spring, every team on campus. Every tap at the snack bar, and every coffee on the way to the game, keeps earning.</p></div>
     <div class="chap" data-i="6"><p class="k">For the whole athletic department</p><h2>Every sport. One card.</h2><p>Not just football. One program, one card, every team on campus, all year.</p><div class="acts"><a class="primary" href="#start">Bring it to your school</a><a class="textlink" href="#trust">See why schools sign</a></div></div>
     <div class="prog" aria-hidden="true"><span id="bar"></span></div>
     <p class="loading" id="loading" hidden>Loading film…</p>
@@ -270,11 +284,16 @@ p{margin:0}
 
 <section class="sec white gut" id="trust">
   <div class="in">
-    <p class="lbl">For athletic directors, principals and booster boards</p>
-    <h2>Built for the people who answer for the program.</h2>
+    <div class="split">
+      <div>
+        <p class="lbl">For athletic directors, principals and booster boards</p>
+        <h2>Built for the people who answer for the program.</h2>
+      </div>
+      <img class="photo" src="media/photo-athletic-office.jpg" alt="An athletic director and the booster club president review a chart on a laptop in the athletic office" loading="lazy">
+    </div>
     <div class="trust">
       <div><h3>Bank-approved process</h3><p>Every program comes on through the onboarding process our partner bank approved: application, terms, verification, training, launch.</p></div>
-      <div><h3>No work for your staff</h3><p>No product to sell, no order forms, no cash boxes. Families enroll themselves and support runs through Grab Wallet, not your front office.</p></div>
+      <div><h3>No work for your staff</h3><p>No product to sell, no order forms, no cash boxes. Families enroll themselves and support runs through GrabWallet, not your front office.</p></div>
       <div><h3>You see every dollar</h3><p>The admin portal shows cardholders, taps, revenue and campaigns by team, with reports you can hand to your bookkeeper or auditor.</p></div>
     </div>
   </div>
@@ -286,14 +305,14 @@ p{margin:0}
     <h2>No asks. Just everyday spending.</h2>
     <p class="lead" style="margin-top:18px">Pick a purchase on the phone. Watch where the reward goes.</p>
     <div class="sim">
-      <div class="phone" aria-label="Grab Wallet app preview">
-        <div class="ph-top"><span>Grab Wallet</span><span>Nearby</span></div>
+      <div class="phone" aria-label="GrabWallet app preview">
+        <div class="ph-top"><span>GrabWallet</span><span>Nearby</span></div>
         <div class="mcard" id="mcard"><span id="mcardName">Your High School</span></div>
         <div class="merch" role="group" aria-label="Choose a purchase">
-          <button type="button" data-m="Coffee before the game"><span>Coffee before the game</span><em>Tap</em></button>
-          <button type="button" data-m="Gas on the drive home"><span>Gas on the drive home</span><em>Tap</em></button>
+          <button type="button" data-m="Coffee before volleyball"><span>Coffee before volleyball</span><em>Tap</em></button>
+          <button type="button" data-m="Gas on the way to the track meet"><span>Gas on the way to the track meet</span><em>Tap</em></button>
           <button type="button" data-m="Weekly groceries"><span>Weekly groceries</span><em>Tap</em></button>
-          <button type="button" data-m="Pizza after the win"><span>Pizza after the win</span><em>Tap</em></button>
+          <button type="button" data-m="Pizza after the softball win"><span>Pizza after the softball win</span><em>Tap</em></button>
         </div>
         <div class="toast" id="toast" role="status" aria-live="polite">Reward earned</div>
       </div>
@@ -310,14 +329,14 @@ p{margin:0}
   <div class="in">
     <p class="lbl">A season, two ways</p>
     <h2>Campaigns end. This keeps going.</h2>
-    <p class="lead" style="margin-top:18px">A donation campaign is a burst of asks to the same friends and family, then silence until next year. Grab Wallet earns quietly every week your families use the card.</p>
+    <p class="lead" style="margin-top:18px">A donation campaign is a burst of asks to the same friends and family, then silence until next year. GrabWallet earns quietly every week your families use the card.</p>
     <div class="cmp">
       <div class="cmp-head">
-        <div class="legend"><span><i style="background:var(--slate)"></i>Donation campaign</span><span><i style="background:var(--sc1);height:4px"></i>Grab Wallet</span></div>
+        <div class="legend"><span><i style="background:var(--slate)"></i>Donation campaign</span><span><i style="background:var(--sc1);height:4px"></i>GrabWallet</span></div>
         <button class="play" type="button" id="play">Play the season</button>
       </div>
       <div class="chartbox">
-        <svg viewBox="0 0 900 320" role="img" aria-label="Illustrative season: a campaign line jumps in the first month then stays flat; the Grab Wallet line rises steadily all year.">
+        <svg viewBox="0 0 900 320" role="img" aria-label="Illustrative season: a campaign line jumps in the first month then stays flat; the GrabWallet line rises steadily all year.">
           <g stroke="#D9DCDF" stroke-width="1">
             <line x1="60" y1="270" x2="870" y2="270"/><line x1="60" y1="200" x2="870" y2="200" stroke-dasharray="3 5"/><line x1="60" y1="130" x2="870" y2="130" stroke-dasharray="3 5"/><line x1="60" y1="60" x2="870" y2="60" stroke-dasharray="3 5"/>
           </g>
@@ -336,7 +355,7 @@ p{margin:0}
       </div>
       <div class="cmp-foot">
         <p><b>Campaign:</b> students send asks to their contacts, the money comes in a burst, and next season starts over with a more tired list.</p>
-        <p><b>Grab Wallet:</b> no asks and no contact lists. Assumes families keep using the card at reward partners; this is a shape, not a forecast.</p>
+        <p><b>GrabWallet:</b> no asks and no contact lists. Assumes families keep using the card at reward partners; this is a shape, not a forecast.</p>
       </div>
     </div>
   </div>
@@ -347,11 +366,11 @@ p{margin:0}
     <p class="lbl">Before you sign with anyone</p>
     <h2>Five questions to ask any fundraising platform.</h2>
     <div class="qs">
-      <details open><summary><span class="num">01</span><span class="q">What do you collect from our students' phones?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">Grab Wallet answer</span><p>Nothing. Families enroll themselves. No student contact lists, rosters or pupil records ever change hands.</p></div></details>
-      <details><summary><span class="num">02</span><span class="q">What happens when the campaign ends?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">Grab Wallet answer</span><p>There is no campaign to end. The program keeps earning as long as families use the card at reward partners.</p></div></details>
-      <details><summary><span class="num">03</span><span class="q">Do our supporters get charged every month?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">Grab Wallet answer</span><p>There is no donation to charge. Supporters earn rewards on purchases they already choose to make.</p></div></details>
-      <details><summary><span class="num">04</span><span class="q">What percentage do you keep?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">Grab Wallet answer</span><p>The split between your program, your families and Grab Wallet is written into your program's agreement, so you see it before you sign.</p></div></details>
-      <details><summary><span class="num">05</span><span class="q">When do we get paid?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">Grab Wallet answer</span><p>Payouts go to your program's own account on the schedule written into your agreement.</p></div></details>
+      <details open><summary><span class="num">01</span><span class="q">What do you collect from our students' phones?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>Nothing. Families enroll themselves. No student contact lists, rosters or pupil records ever change hands.</p></div></details>
+      <details><summary><span class="num">02</span><span class="q">What happens when the campaign ends?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>There is no campaign to end. The program keeps earning as long as families use the card at reward partners.</p></div></details>
+      <details><summary><span class="num">03</span><span class="q">Do our supporters get charged every month?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>There is no donation to charge. Supporters earn rewards on purchases they already choose to make.</p></div></details>
+      <details><summary><span class="num">04</span><span class="q">What percentage do you keep?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>The split between your program, your families and GrabWallet is written into your program's agreement, so you see it before you sign.</p></div></details>
+      <details><summary><span class="num">05</span><span class="q">When do we get paid?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>Payouts go to your program's own account on the schedule written into your agreement.</p></div></details>
     </div>
   </div>
 </section>
@@ -361,18 +380,19 @@ p{margin:0}
     <div>
       <p class="lbl">Your school. Your colors.</p>
       <h2>It looks like it's yours, because it is.</h2>
-      <p class="lead" style="margin-top:18px">Every program gets its own card and page in its own colors. Try it with your school.</p>
+      <p class="lead" style="margin-top:18px">Every program gets its own card and page in its own colors, and every team can have its own. Try it with your school.</p>
       <form class="picker" id="picker" onsubmit="return false">
         <label for="sname">School name<input type="text" id="sname" value="Your High School" maxlength="34"></label>
-        <label for="preset">Start from<select id="preset"><option value="grab">Grab Wallet default</option><option value="custom">Pick my own colors</option></select></label>
+        <label for="preset">Start from<select id="preset"><option value="grab">GrabWallet default</option><option value="custom">Pick my own colors</option></select></label>
+        <label for="team">Team<select id="team"><option>Athletics</option><option>Football</option><option>Volleyball</option><option>Soccer</option><option>Basketball</option><option>Softball</option><option>Baseball</option><option>Flag Football</option><option>Track &amp; Field</option><option>Spirit &amp; Band</option></select></label>
         <div class="swatches"><label for="c1"><input type="color" id="c1" value="#1C2B40"> Primary</label><label for="c2"><input type="color" id="c2" value="#9AA6B4"> Secondary</label></div>
         <p class="note">Try any school's colors. A school's name, logo and colors go on its cards only with that school's permission.</p>
       </form>
     </div>
-    <div class="card" id="card" role="img" aria-label="Preview of a school-branded Grab Wallet card">
-      <div class="top"><span class="school" id="cardName">Your High School</span><span class="gw">Grab Wallet</span></div>
+    <div class="card" id="card" role="img" aria-label="Preview of a school-branded GrabWallet card">
+      <div class="top"><span class="school" id="cardName">Your High School</span><span class="gw"><img src="media/grabwallet-icon.png" alt="" width="16" height="16">GrabWallet</span></div>
       <span class="chip" aria-hidden="true"></span>
-      <div class="bottom"><span>Supporter</span><span>Athletics</span></div>
+      <div class="bottom"><span>Supporter</span><span id="cardTeam">Athletics</span></div>
     </div>
   </div>
 </section>
@@ -383,7 +403,7 @@ p{margin:0}
     <h2>One card. Three ways to raise.</h2>
     <div class="three">
       <article><span class="bar"></span><h3>Fanraising card</h3><p>Families and supporters carry the card. Every tap at a reward partner splits a reward between the program and the family.</p></article>
-      <article><span class="bar"></span><h3>Campaigns and thank-yous</h3><p>Run a program ask, like a player pack or a tournament trip, and send every donor a personal thank-you.</p></article>
+      <article><span class="bar"></span><h3>Campaigns and thank-yous</h3><p>Run a program ask, like a volleyball tournament trip or new softball uniforms, and send every donor a personal thank-you.</p></article>
       <article><span class="bar"></span><h3>Local merchants</h3><p>Businesses near campus offer rewards to your families and become part of game day.</p></article>
     </div>
   </div>
@@ -400,7 +420,7 @@ p{margin:0}
           <div><h3>The booster club signs</h3><p>Usually public schools. The booster club signs as its own nonprofit and receives the payout, with no district procurement cycle.</p></div>
         </div>
       </div>
-      <img class="photo" src="media/football.jpg" alt="A running back breaks through the line under Friday night lights">
+      <img class="photo" src="media/photo-volleyball-huddle.jpg" alt="A girls' volleyball team huddles with their head coach between sets" loading="lazy">
     </div>
     <ol class="phases" aria-label="Five phases">
       <li><b>Alignment and application</b><span>Steps 1 to 3</span></li>
@@ -417,19 +437,37 @@ p{margin:0}
     <p class="lbl">For parents, alumni and fans</p>
     <h2>Back your team with every tap.</h2>
     <p class="lead" style="margin-top:18px">You earn rewards at reward partners, and so does the program you choose. You enroll yourself, and your school never sees your purchases.</p>
-    <div class="mosaic">
-      <figure><img src="media/stands.jpg" alt="Parents cheering in the bleachers at night"><figcaption>Parents<span>Earn on what the family already buys.</span></figcaption></figure>
-      <figure><img src="media/hoops.jpg" alt="A guard rises for a layup in a packed gym"><figcaption>Every sport<span>Football first, then every team on campus.</span></figcaption></figure>
-      <figure><img src="media/soccer.jpg" alt="Soccer players celebrating a goal under the lights"><figcaption>Every season<span>Fall, winter and spring, all year.</span></figcaption></figure>
+    <figure class="standsfig"><img src="media/photo-stands.jpg" alt="Families cheer in the home stands while the band plays and the cheer team performs on the track" loading="lazy"></figure>
+    <div class="teamshead">
+      <h3>Every team on campus</h3>
+      <p>Fall, winter, spring. Every team earns the same way.</p>
+    </div>
+    <div class="teams">
+      <figure class="t-track"><img src="media/photo-track.jpg" alt="The girls' 100 meters starts while the boys wait behind the line for their race" loading="lazy"><figcaption>Track &amp; Field<span>Girls and boys, same meet, their own races</span></figcaption></figure>
+      <figure><img src="media/photo-volleyball.jpg" alt="A setter sets the ball as a hitter rises and the visiting team jumps to block across the net" loading="lazy"><figcaption>Volleyball</figcaption></figure>
+      <figure><img src="media/photo-football.jpg" alt="A quarterback drops back to pass behind his line" loading="lazy"><figcaption>Football</figcaption></figure>
+      <figure><img src="media/photo-soccer.jpg" alt="A striker dribbles past a defender as teammates run in support" loading="lazy"><figcaption>Girls' Soccer</figcaption></figure>
+      <figure><img src="media/photo-boys-basketball.jpg" alt="A guard drives to the basket in a packed gym" loading="lazy"><figcaption>Boys' Basketball</figcaption></figure>
+      <figure><img src="media/photo-softball.jpg" alt="A pitcher winds up as the catcher waits behind the plate" loading="lazy"><figcaption>Softball</figcaption></figure>
+      <figure><img src="media/photo-baseball.jpg" alt="A batter swings as the visiting catcher and the umpire set up behind the plate" loading="lazy"><figcaption>Baseball</figcaption></figure>
+      <figure><img src="media/photo-flag-football.jpg" alt="A quarterback throws a spiral as two receivers run their routes" loading="lazy"><figcaption>Flag Football</figcaption></figure>
+      <figure><img src="media/photo-girls-basketball.jpg" alt="A guard pulls up for a jump shot" loading="lazy"><figcaption>Girls' Basketball</figcaption></figure>
+      <figure class="t-spirit"><img src="media/photo-spirit-band.jpg" alt="The cheer team performs on the track while the marching band plays in the stands" loading="lazy"><figcaption>Spirit Line &amp; Band<span>They show up for every team. They can raise too.</span></figcaption></figure>
+      <a class="t-cta" href="#start"><b>Your team next</b><span>Every team on campus can earn with GrabWallet.</span><em>Bring it to your school</em></a>
     </div>
   </div>
 </section>
 
 <section class="sec stone gut" id="merchants">
   <div class="in">
-    <p class="lbl">For local businesses</p>
-    <h2>Get in front of game-day families.</h2>
-    <p class="lead" style="margin-top:18px">Offer a reward to the families around a school, and they find you in the wallet when they are nearby.</p>
+    <div class="split">
+      <div>
+        <p class="lbl">For local businesses</p>
+        <h2>Get in front of game-day families.</h2>
+        <p class="lead" style="margin-top:18px">Offer a reward to the families around a school, and they find you in the wallet when they are nearby.</p>
+      </div>
+      <img class="photo" src="media/photo-coffee-shop.jpg" alt="A coffee shop owner hands a parent an iced coffee as he taps his card" loading="lazy">
+    </div>
     <div class="tiers">
       <div><h3>Community</h3><p>A reward offer to the families around one school.</p></div>
       <div><h3>Featured</h3><p>Top placement in the wallet near game day.</p></div>
@@ -442,7 +480,7 @@ p{margin:0}
 <section class="sec white gut" id="find">
   <div class="in">
     <p class="lbl">Find your school</p>
-    <h2>Is your school on Grab Wallet?</h2>
+    <h2>Is your school on GrabWallet?</h2>
     <form class="find" role="search" onsubmit="return false"><label for="fq" style="position:absolute;left:-9999px">Search by school or city</label><input id="fq" placeholder="Search by school or city"></form>
     <p class="lead" style="margin-top:16px;font-size:17px">Schools appear here as they launch, each with its own page. Don't see yours yet? Tell us who runs your program and we'll reach out.</p>
   </div>
@@ -451,7 +489,7 @@ p{margin:0}
 <section class="sec dark gut" id="start">
   <div class="in">
     <p class="lbl">Get started</p>
-    <h2>Bring Grab Wallet to your school.</h2>
+    <h2>Bring GrabWallet to your school.</h2>
     <form class="form" id="lead" novalidate>
       <div class="two">
         <label for="fn"><span class="lt">First name<span class="req" aria-hidden="true">*</span></span><input id="fn" name="first" autocomplete="given-name" required maxlength="60"><span class="err" id="fn-err"></span></label>
@@ -463,10 +501,10 @@ p{margin:0}
         <label for="ph"><span class="lt">Phone<span class="opt">Optional</span></span><input id="ph" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20"><span class="err" id="ph-err"></span></label>
         <label for="role">I am a<select id="role" name="role"><option>Athletic Director</option><option>Coach</option><option>Booster Club</option><option>Principal/President</option><option>Parent</option><option>Local Business</option></select></label>
       </div>
-      <label class="check" for="sms"><input type="checkbox" id="sms" name="sms"><span><b>Text me about Grab Wallet.</b> I agree to receive text messages from Grab Wallet at the phone number above. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase.</span></label>
+      <label class="check" for="sms"><input type="checkbox" id="sms" name="sms"><span><b>Text me about GrabWallet.</b> I agree to receive text messages from GrabWallet at the phone number above. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase.</span></label>
       <span class="err" id="sms-err"></span>
       <div class="hp" aria-hidden="true"><label for="website">Website<input id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
-      <p class="fine">Fields marked * are required. We use your details only to follow up about Grab Wallet for your program.</p>
+      <p class="fine">Fields marked * are required. We use your details only to follow up about GrabWallet for your program.</p>
       <button class="send" type="submit" id="sendBtn">Send</button>
       <p class="err" id="form-err" role="alert"></p>
     </form>
@@ -474,7 +512,7 @@ p{margin:0}
       <h3 id="thanksH">Thanks. We've got it.</h3>
       <p>Here's what happens next:</p>
       <ol>
-        <li>Someone from the Grab Wallet team reaches out to set up a short call.</li>
+        <li>Someone from the GrabWallet team reaches out to set up a short call.</li>
         <li>We walk through how it works for your athletic department, from football to every other team on campus.</li>
         <li>If it's a fit, we start the bank-approved onboarding together.</li>
       </ol>
@@ -486,7 +524,7 @@ p{margin:0}
 
 <footer class="foot gut">
   <div class="in">
-    <div><b>Grab Wallet</b>A Grab Holdings company.</div>
+    <div><img src="media/grabwallet-logo-dark.png" alt="GrabWallet" width="126" height="24" style="display:block;margin-bottom:12px">A Grab Holdings company.</div>
     <div><b>Explore</b>Why schools · Your card · The wallet · Families · Merchants</div>
     
     <div><b>Legal</b>Privacy · Terms</div>
@@ -569,7 +607,9 @@ p{margin:0}
   preset.addEventListener('change',()=>{if(P[preset.value]){c1.value=P[preset.value][0]; c2.value=P[preset.value][1]; apply(); cardName.textContent=sname.value;}});
   [c1,c2].forEach(i=>i.addEventListener('input',()=>{preset.value='custom'; apply();}));
   const mcardName=document.getElementById('mcardName'), progLbl=document.getElementById('progLbl');
-  function syncName(){const n=sname.value||'Your High School'; cardName.textContent=n; mcardName.textContent=n; progLbl.textContent=n+' athletics';}
+  const team=document.getElementById('team'), cardTeam=document.getElementById('cardTeam');
+  function syncName(){const n=sname.value||'Your High School'; const t=team.value; cardName.textContent=n; mcardName.textContent=n; cardTeam.textContent=t; progLbl.textContent=n+' '+(t==='Athletics'?'athletics':t.toLowerCase());}
+  team.addEventListener('change',syncName);
   sname.addEventListener('input',syncName);
   preset.addEventListener('change',syncName);
 
@@ -595,9 +635,9 @@ p{margin:0}
   document.getElementById('play').addEventListener('click',play);
   // Lead form. Set FORM_ENDPOINT to the backend that receives submissions (JSON POST).
   (function(){
-    // Supabase project (Project Settings > API). The anon key is meant to be public: the database only lets it ADD a lead.
-    const SUPABASE_URL='';       // e.g. https://abcdxyz.supabase.co
-    const SUPABASE_ANON_KEY='';
+    // Supabase project. The publishable key is meant to be public: the database only lets it ADD a lead.
+    const SUPABASE_URL='https://hayltfppsndszmgidgmf.supabase.co';
+    const SUPABASE_ANON_KEY='sb_publishable_ElzG1c1-af7HeJ5DN2o1_A_YGfWX056';
     const PRODUCT_LINE='SchoolWallet', LEAD_SOURCE='Website';
     const form=document.getElementById('lead'), sendBtn=document.getElementById('sendBtn'), formErr=document.getElementById('form-err'),
           thanks=document.getElementById('thanks'), thanksH=document.getElementById('thanksH');
@@ -637,7 +677,7 @@ p{margin:0}
       try{
         if(!SUPABASE_URL||!SUPABASE_ANON_KEY) throw {code:'not_configured'};
         const r=await fetch(SUPABASE_URL+'/rest/v1/leads',{method:'POST',
-          headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
+          headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
           body:JSON.stringify(lead)});
         if(!r.ok){ let m=''; try{m=(await r.json()).message||'';}catch(_){} throw {code:'http_'+r.status, message:m}; }
         showThanks(lead.first_name);

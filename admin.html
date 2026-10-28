@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Grab Wallet Admin</title>
+<title>GrabWallet Admin</title>
+<link rel="icon" type="image/png" href="media/favicon-64.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
@@ -21,8 +22,7 @@ button,input,select,textarea{font:inherit; color:inherit}
 .top{background:var(--night); color:var(--nightText); border-bottom:3px solid var(--brand)}
 .top .in{display:flex; flex-wrap:wrap; gap:10px 20px; align-items:center; justify-content:space-between; padding:12px 16px; max-width:1280px; margin:0 auto}
 .mark{display:flex; align-items:center; gap:10px}
-.mark i{width:24px; height:24px; border-radius:6px; background:var(--brand); border:2px solid var(--accent)}
-.mark b{font:700 20px/1 var(--display); letter-spacing:.06em}
+.mark img{height:24px; width:auto; display:block}
 .mark span{font:600 11px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--nightMute)}
 .who{display:flex; gap:14px; align-items:center; font-size:13px; color:var(--nightMute)}
 .who button{all:unset; cursor:pointer; color:var(--nightText); font-weight:600; text-decoration:underline; text-underline-offset:4px}
@@ -70,7 +70,7 @@ dt{color:var(--slate)} dd{margin:0; color:var(--ink); word-break:break-word}
 </head>
 <body>
 <header class="top"><div class="in">
-  <div class="mark"><i aria-hidden="true"></i><b>GRAB WALLET</b><span>Admin</span></div>
+  <div class="mark"><img src="media/grabwallet-logo-dark.png" alt="GrabWallet" width="126" height="24"><span>Admin</span></div>
   <div class="who" id="who" hidden><span id="whoEmail"></span><button type="button" id="signOut">Sign out</button></div>
 </div></header>
 
@@ -101,7 +101,7 @@ dt{color:var(--slate)} dd{margin:0; color:var(--ink); word-break:break-word}
   <!-- Dashboard -->
   <section id="vApp" hidden>
     <div class="head">
-      <div><h1>Leads</h1><p>Everyone who filled in "Bring Grab Wallet to your school."</p></div>
+      <div><h1>Leads</h1><p>Everyone who filled in "Bring GrabWallet to your school."</p></div>
     </div>
     <div class="stats">
       <div class="stat"><b id="stTotal">0</b><span>Total leads</span></div>
@@ -147,12 +147,12 @@ dt{color:var(--slate)} dd{margin:0; color:var(--ink); word-break:break-word}
   <p class="msg" id="dMsg" hidden role="status"></p>
 </aside>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
 <script>
 (function(){
   // Same project as the public site (Project Settings > API).
-  const SUPABASE_URL='';       // e.g. https://abcdxyz.supabase.co
-  const SUPABASE_ANON_KEY='';
+  const SUPABASE_URL='https://hayltfppsndszmgidgmf.supabase.co';
+  const SUPABASE_ANON_KEY='sb_publishable_ElzG1c1-af7HeJ5DN2o1_A_YGfWX056';
 
   const $=id=>document.getElementById(id);
   const views=['vConfig','vSignin','vDenied','vApp'];
