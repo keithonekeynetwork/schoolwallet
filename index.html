@@ -113,10 +113,15 @@ p{margin:0}
 .mfull p{font:400 17px/1.65 var(--serif); color:var(--nightText)}
 
 .sec.stone{background:color-mix(in srgb, var(--sc1) 7%, #EEF0F1)}
-.trust{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:0; margin-top:52px; border-top:1px solid var(--ink)}
+.trust{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; margin-top:52px; border-top:1px solid var(--ink)}
 .trust div{padding:26px 26px 0 0; display:flex; flex-direction:column; gap:10px; min-width:0}
 .trust div + div{padding-left:26px; border-left:1px solid var(--line)}
 .trust p{color:var(--slate)}
+.trust .sec1{position:relative}
+.trust .sec1::before{content:""; position:absolute; top:-1px; left:0; right:26px; height:4px; background:var(--sc1)}
+.trust .sec1 h3::before{content:""; display:inline-block; width:.8em; height:.95em; margin-right:.4em; vertical-align:-.08em; background:var(--sc1); clip-path:polygon(50% 0,100% 18%,100% 55%,50% 100%,0 55%,0 18%)}
+@media (max-width:1040px){.trust{grid-template-columns:repeat(2,minmax(0,1fr))} .trust div:nth-child(3){padding-left:0; border-left:0} .trust div:nth-child(n+3){padding-top:30px}}
+@media (max-width:620px){.trust{grid-template-columns:1fr} .trust div + div{padding-left:0; border-left:0; padding-top:26px} .trust .sec1::before{right:0}}
 .yours{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:clamp(36px,6vw,80px); align-items:center}
 .card{width:100%; max-width:440px; aspect-ratio:1.586; border-radius:18px; background:linear-gradient(135deg, var(--sc1) 0%, color-mix(in srgb, var(--sc1) 78%, #000) 100%); color:var(--scInk); padding:26px 28px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 30px 60px -28px rgba(16,20,24,.55); position:relative; overflow:hidden; transition:background .4s}
 .card::before{content:""; position:absolute; right:-12%; top:-30%; width:70%; height:160%; background:var(--sc2); opacity:.9; transform:rotate(18deg); transition:background .4s}
@@ -331,8 +336,9 @@ p{margin:0}
       <img class="photo" src="media/photo-athletic-office.jpg" alt="An athletic director and the booster club president review a chart on a laptop in the athletic office" loading="lazy">
     </div>
     <div class="trust">
+      <div class="sec1"><h3>Bank&#8209;level security</h3><p>Built to current bank and fintech security standards. Every GrabWallet card is issued through our partner bank, with the same protections people expect from the debit card already in their wallet.</p></div>
       <div><h3>Bank-approved process</h3><p>Every program comes on through the onboarding process our partner bank approved: application, terms, verification, training, launch.</p></div>
-      <div><h3>No work for your staff</h3><p>No product to sell, no order forms, no cash boxes. Families enroll themselves and support runs through GrabWallet, not your front office.</p></div>
+      <div><h3>Build community, fire up rewards</h3><p>No product to sell, no order forms, no cash boxes. Your time goes where it pays off: bringing boosters, local businesses and sponsors on as reward partners. Cardholder support runs through GrabWallet, not your front office.</p></div>
       <div><h3>You see every dollar</h3><p>The admin portal shows cardholders, taps, revenue and campaigns by team, with reports you can hand to your bookkeeper or auditor.</p></div>
     </div>
   </div>
@@ -367,8 +373,8 @@ p{margin:0}
 <section class="sec stone gut" id="compare">
   <div class="in">
     <p class="lbl">A season, two ways</p>
-    <h2>Campaigns end. This keeps going.</h2>
-    <p class="lead" style="margin-top:18px">A donation campaign is a burst of asks to the same friends and family, then silence until next year. GrabWallet earns quietly every week your families use the card.</p>
+    <h2>Campaigns end. Your wallet keeps growing.</h2>
+    <p class="lead" style="margin-top:18px">A donation campaign is a burst of asks to the same friends and family, then silence until next year. GrabWallet earns quietly every week your supporters use the card.</p>
     <div class="cmp">
       <div class="cmp-head">
         <div class="legend"><span><i style="background:var(--slate)"></i>Donation campaign</span><span><i style="background:var(--sc1);height:4px"></i>GrabWallet</span></div>
@@ -405,10 +411,10 @@ p{margin:0}
     <p class="lbl">Before you sign with anyone</p>
     <h2>Five questions to ask any fundraising platform.</h2>
     <div class="qs">
-      <details open><summary><span class="num">01</span><span class="q">What do you collect from our students' phones?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>Nothing. Families enroll themselves. No student contact lists, rosters or pupil records ever change hands.</p></div></details>
-      <details><summary><span class="num">02</span><span class="q">What happens when the campaign ends?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>There is no campaign to end. The program keeps earning as long as families use the card at reward partners.</p></div></details>
-      <details><summary><span class="num">03</span><span class="q">Do our supporters get charged every month?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>There is no donation to charge. Supporters earn rewards on purchases they already choose to make.</p></div></details>
-      <details><summary><span class="num">04</span><span class="q">What percentage do you keep?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>The split between your program, your families and GrabWallet is written into your program's agreement, so you see it before you sign.</p></div></details>
+      <details open><summary><span class="num">01</span><span class="q">What do you collect from our students' phones?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>Nothing. Supporters opt in on their own. Your program shares a QR code at games, in a newsletter or on a flyer, and anyone who wants to join scans it and enters their own name and phone number. No student contact lists, rosters or pupil records ever change hands.</p></div></details>
+      <details><summary><span class="num">02</span><span class="q">What happens when the campaign ends?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>There is no campaign to end. The program keeps earning as long as supporters use the card at reward partners.</p></div></details>
+      <details><summary><span class="num">03</span><span class="q">Do our supporters get charged every month?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>No. There is no donation or charge to use GrabWallet. Supporters may earn rewards on purchases they routinely make.</p></div></details>
+      <details><summary><span class="num">04</span><span class="q">What percentage do you keep?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>The split between your program, your supporters and GrabWallet is written into your program's agreement, so you see it before you sign.</p></div></details>
       <details><summary><span class="num">05</span><span class="q">When do we get paid?</span><span class="pm" aria-hidden="true">+</span></summary><div class="a"><span class="pill yes">GrabWallet answer</span><p>Payouts go to your program's own account on the schedule written into your agreement.</p></div></details>
     </div>
   </div>
