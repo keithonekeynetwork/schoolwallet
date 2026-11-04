@@ -537,14 +537,14 @@ p{margin:0}
     <h2>Bring GrabWallet to your school.</h2>
     <form class="form" id="lead" novalidate>
       <div class="two">
-        <label for="fn"><span class="lt">First name<span class="req" aria-hidden="true">*</span></span><input id="fn" name="first" autocomplete="given-name" required maxlength="60"><span class="err" id="fn-err"></span></label>
-        <label for="ln"><span class="lt">Last name<span class="req" aria-hidden="true">*</span></span><input id="ln" name="last" autocomplete="family-name" required maxlength="60"><span class="err" id="ln-err"></span></label>
+        <label for="fn"><span class="lt">First name<span class="req" aria-hidden="true">*</span></span><input id="fn" name="first" autocomplete="given-name" required maxlength="40"><span class="err" id="fn-err"></span></label>
+        <label for="ln"><span class="lt">Last name<span class="req" aria-hidden="true">*</span></span><input id="ln" name="last" autocomplete="family-name" required maxlength="80"><span class="err" id="ln-err"></span></label>
       </div>
       <label for="org"><span class="lt">School or organization<span class="req" aria-hidden="true">*</span></span><input id="org" name="org" autocomplete="organization" required maxlength="120"><span class="err" id="org-err"></span></label>
-      <label for="em"><span class="lt">Email<span class="req" aria-hidden="true">*</span></span><input id="em" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120"><span class="err" id="em-err"></span></label>
+      <label for="em"><span class="lt">Email<span class="req" aria-hidden="true">*</span></span><input id="em" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="100"><span class="err" id="em-err"></span></label>
       <div class="two">
         <label for="ph"><span class="lt">Phone<span class="opt">Optional</span></span><input id="ph" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20"><span class="err" id="ph-err"></span></label>
-        <label for="role">I am a<select id="role" name="role"><option>Athletic Director</option><option>Coach</option><option>Booster Club</option><option>Principal/President</option><option>Parent</option><option>Local Business</option></select></label>
+        <label for="role">I am a<select id="role" name="role"><option value="-None-">Choose one</option><option>Athletic Director</option><option>Coach</option><option>Booster Club Officer</option><option>Program Director</option><option>School Leader</option><option>Other</option></select></label>
       </div>
       <label class="check" for="sms"><input type="checkbox" id="sms" name="sms"><span><b>Text me about GrabWallet.</b> I agree to receive text messages from GrabWallet at the phone number above. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase.</span></label>
       <span class="err" id="sms-err"></span>
@@ -680,10 +680,13 @@ p{margin:0}
   document.getElementById('play').addEventListener('click',play);
   // Lead form. Set FORM_ENDPOINT to the backend that receives submissions (JSON POST).
   (function(){
-    // Supabase project. The publishable key is meant to be public: the database only lets it ADD a lead.
-    const SUPABASE_URL='https://hayltfppsndszmgidgmf.supabase.co';
-    const SUPABASE_ANON_KEY='sb_publishable_ElzG1c1-af7HeJ5DN2o1_A_YGfWX056';
-    const PRODUCT_LINE='SchoolWallet', LEAD_SOURCE='Website';
+    // Zoho CRM web form (GrabWallet / SchoolWallet webform from Heidi, Oct 28). Each submission becomes a Lead in Grab's Zoho CRM.
+    // These are Zoho's public form keys, the same ones Zoho puts in its own embed code.
+    const ZOHO={action:'https://crm.zoho.com/crm/WebToLeadForm',
+      xnQsjsdp:'6fd3bc2db1b3eba0c707909ee93284c3503b3664a3bae9849a598420765a869d',
+      xmIwtLD:'13d6521a51018a6651cf1ae11b9459aafc98c9697be2a3d42edc501e1ba2fd6ac16e422418d779dc0e8e165f32c75676',
+      actionType:'TGVhZHM=', returnURL:'null'};
+    const PRODUCT_LINE='GW-SchoolWallet', LEAD_SOURCE='Webform';
     const form=document.getElementById('lead'), sendBtn=document.getElementById('sendBtn'), formErr=document.getElementById('form-err'),
           thanks=document.getElementById('thanks'), thanksH=document.getElementById('thanksH');
     const $=id=>document.getElementById(id);
@@ -712,26 +715,38 @@ p{margin:0}
       if(!validate()) return;
       // Spam filters: a hidden field people never fill, and a form sent within 3 seconds of loading.
       if($('website').value || Date.now()-opened<3000){ showThanks(); return; }
-      const lead={
-        first_name:$('fn').value.trim(), last_name:$('ln').value.trim(), company:$('org').value.trim(),
-        email:$('em').value.trim().toLowerCase(), phone:fmtPhone($('ph').value)||null, role:$('role').value,
-        sms_opt_in:$('sms').checked, sms_consent_text:$('sms').checked?$('sms').parentElement.textContent.replace(/\s+/g,' ').trim():null,
-        product_line:PRODUCT_LINE, lead_source:LEAD_SOURCE, page_url:(location.origin+location.pathname).slice(0,300)
+      const fields={
+        'First Name':$('fn').value.trim(), 'Last Name':$('ln').value.trim(), 'Company':$('org').value.trim(),
+        'Email':$('em').value.trim().toLowerCase(), 'Phone':fmtPhone($('ph').value),
+        'LEADCF9':$('role').value,            // I am a
+        'LEADCF4':PRODUCT_LINE,               // Product Line (hidden)
+        'Lead Source':LEAD_SOURCE,
+        'zc_gad':'', 'aG9uZXlwb3Q':''         // Zoho's own fields; the second is its spam trap and stays empty
       };
+      if($('sms').checked) fields['LEADCF52']='on';   // Text me about GrabWallet
       sendBtn.disabled=true; sendBtn.textContent='Sending…';
       try{
-        if(!SUPABASE_URL||!SUPABASE_ANON_KEY) throw {code:'not_configured'};
-        const r=await fetch(SUPABASE_URL+'/rest/v1/leads',{method:'POST',
-          headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
-          body:JSON.stringify(lead)});
-        if(!r.ok){ let m=''; try{m=(await r.json()).message||'';}catch(_){} throw {code:'http_'+r.status, message:m}; }
-        showThanks(lead.first_name);
+        await postToZoho(fields);
+        showThanks(fields['First Name']);
       }catch(err){
-        formErr.textContent=(err&&/too many submissions/.test(err.message||''))
-          ? 'Thanks, we already have your details. Someone will be in touch soon.'
-          : 'Sorry, we couldn\'t send that right now. Please try again in a moment.';
+        formErr.textContent='Sorry, we couldn\'t send that right now. Please try again in a moment.';
       }finally{ sendBtn.disabled=false; sendBtn.textContent='Send'; }
     });
+    // Posts a normal HTML form to Zoho inside a hidden frame, so the visitor stays on this page.
+    function postToZoho(fields){
+      return new Promise((resolve,reject)=>{
+        const name='zoho_sink_'+Date.now();
+        const frame=document.createElement('iframe'); frame.name=name; frame.title='Form delivery'; frame.hidden=true; frame.setAttribute('aria-hidden','true');
+        const f=document.createElement('form'); f.action=ZOHO.action; f.method='POST'; f.target=name; f.acceptCharset='UTF-8'; f.hidden=true;
+        const all=Object.assign({xnQsjsdp:ZOHO.xnQsjsdp, xmIwtLD:ZOHO.xmIwtLD, actionType:ZOHO.actionType, returnURL:ZOHO.returnURL}, fields);
+        for(const k in all){ const i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=all[k]==null?'':String(all[k]); f.appendChild(i); }
+        let done=false; const finish=ok=>{ if(done) return; done=true; clearTimeout(t); setTimeout(()=>{frame.remove(); f.remove();},1500); ok?resolve():reject(new Error('no_response')); };
+        frame.addEventListener('load',()=>finish(true));
+        frame.addEventListener('error',()=>finish(false));
+        const t=setTimeout(()=>finish(true),9000);   // Zoho's reply is cross-site, so a slow load still counts as sent
+        document.body.appendChild(frame); document.body.appendChild(f); f.submit();
+      });
+    }
     function showThanks(name){ thanksH.textContent=name?('Thanks, '+name+'. We\'ve got it.'):'Thanks. We\'ve got it.'; form.hidden=true; thanks.hidden=false; thanks.focus(); }
     $('again').addEventListener('click',()=>{form.reset(); ['fn','ln','org','em','ph'].forEach(id=>setErr(id,'')); $('sms-err').textContent=''; thanks.hidden=true; form.hidden=false; $('fn').focus();});
 
