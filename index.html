@@ -263,7 +263,28 @@ p{margin:0}
 .pill.yes{background:#E3EFE6; color:#1F5130}
 .pill.pend{background:#F3EBD9; color:#6B4E12}
 @media (min-width:1100px){.hud{top:auto; left:auto; bottom:44px; right:max(16px,3vw); justify-content:flex-end}}
-@media (max-width:760px){.nav nav{display:none} .nav .in{justify-content:space-between} .mark span{display:none} .rail{display:none} .chap{bottom:10vh} .qs .a{padding-left:0} .hud{top:calc(env(safe-area-inset-top,0px) + 112px)} .sports button{padding:0 11px; font-size:14px} .chap h1,.chap h2{font-size:clamp(38px,11vw,56px)}}
+/* phones: a real menu instead of hidden links, a shorter scroll so the film moves at thumb speed, and chapter dots along the bottom */
+.menubtn{display:none}
+@media (max-width:760px){
+  .nav .in{justify-content:space-between; gap:10px}
+  .mark span{display:none}
+  .menubtn{all:unset; display:inline-flex; align-items:center; order:3; min-height:44px; padding:0 14px; border:1px solid rgba(255,255,255,.35); border-radius:4px; font-weight:600; font-size:14px; cursor:pointer}
+  .menubtn::before{content:""; width:16px; height:2px; margin-right:9px; background:currentColor; box-shadow:0 -5px 0 currentColor, 0 5px 0 currentColor}
+  .menubtn[aria-expanded="true"]{background:var(--nightText); color:var(--night)}
+  .nav nav{display:none; order:4; flex-basis:100%; flex-direction:column; gap:0; padding:6px 0 10px; border-top:1px solid rgba(255,255,255,.14)}
+  .nav.open nav{display:flex}
+  .nav nav a{display:block; padding:12px 4px; font-size:17px; color:var(--nightText); border-bottom:1px solid rgba(255,255,255,.08)}
+  .film{height:640vh}
+  .rail{display:none} .chap{bottom:11vh} .qs .a{padding-left:0}
+  .hud{top:calc(env(safe-area-inset-top,0px) + 112px)}
+  .sports button{padding:0 11px; font-size:14px}
+  .chap h1,.chap h2{font-size:clamp(38px,11vw,56px)}
+  .chap p{font-size:17px; max-width:none}
+  .dots{display:flex}
+}
+.dots{position:absolute; z-index:3; left:0; right:0; bottom:16px; display:none; justify-content:center; gap:8px; pointer-events:none}
+.dots i{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.35); transition:background .3s, transform .3s}
+.dots i.on{background:var(--sc2); transform:scale(1.4)}
 @media (prefers-reduced-motion: reduce){.chap,.scene{transition:none} .flashes{display:none}}
 </style>
 
@@ -271,7 +292,8 @@ p{margin:0}
 <header class="nav gut">
   <div class="in">
     <a class="mark" href="#top"><img src="media/grabwallet-logo-dark.png" alt="GrabWallet" width="147" height="28"><span>High Schools</span></a>
-    <nav aria-label="Site"><a href="#trust">Why schools</a><a href="#tap">Try a tap</a><a href="#compare">A season</a><a href="#questions">5 questions</a><a href="#yours">Your card</a><a href="#products">The wallet</a><a href="#schools">Launch process</a><a href="#community">Families</a><a href="#merchants">Merchants</a></nav>
+    <button type="button" class="menubtn" id="menubtn" aria-expanded="false" aria-controls="sitenav">Menu</button>
+    <nav aria-label="Site" id="sitenav"><a href="#trust">Why schools</a><a href="#tap">Try a tap</a><a href="#compare">A season</a><a href="#questions">5 questions</a><a href="#yours">Your card</a><a href="#products">The wallet</a><a href="#schools">Launch process</a><a href="#community">Families</a><a href="#merchants">Merchants</a></nav>
     <a class="callbtn" href="#start">Get started</a>
   </div>
 </header>
@@ -300,6 +322,7 @@ p{margin:0}
     <div class="chap" data-i="4"><p class="k">Built for the whole community</p><h2>Every seat in the gym can carry one.</h2><p>Parents, grandparents, alumni and local fans each hold their own card, and every one of them backs the same program.</p></div>
     <div class="chap" data-i="5"><p class="k">Spring, in the sun</p><h2>Every team, every season.</h2><p>Fall, winter and spring, every team on campus. Every tap at the snack bar, and every coffee on the way to the game, keeps earning.</p></div>
     <div class="chap" data-i="6"><p class="k">For the whole athletic department</p><h2>Every sport. One card.</h2><p>Not just football. One program, one card, every team on campus, all year.</p><div class="acts"><a class="primary" href="#start">Bring it to your school</a><a class="textlink" href="#trust">See why schools sign</a></div></div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
     <div class="prog" aria-hidden="true"><span id="bar"></span></div>
     <p class="loading" id="loading" hidden>Loading film…</p>
   </div>
@@ -589,6 +612,9 @@ p{margin:0}
     {name:'basketball',from:0.36, to:0.68, src:['media/film-basketball.mp4']},
     {name:'softball',  from:0.68, to:1.00, src:['media/film-softball.mp4']}
   ];
+  // Phones get the small 640x360 cuts (~1.7 MB each instead of 7–9 MB), so the film actually loads over cellular.
+  const phone=window.matchMedia('(max-width:760px)').matches||(window.matchMedia('(pointer:coarse)').matches&&window.innerWidth<1000);
+  if(phone) SPORTS.forEach(sp=>sp.src.unshift(sp.src[0].replace('.mp4','-phone.mp4')));
   const CHAP_AT=[0,0.12,0.24,0.36,0.52,0.68,0.84];   // where each chapter starts
   const FADE=0.035;                                    // crossfade width between sports
   const sceneEls=[...document.querySelectorAll('.scene')], sportBtns=[...document.querySelectorAll('.sports button')];
@@ -596,7 +622,13 @@ p{margin:0}
   let active=0, cur=0;
 
   function prog(){const r=film.getBoundingClientRect(); const span=film.offsetHeight-window.innerHeight; return Math.min(1,Math.max(0,-r.top/span));}
-  function setChap(i){if(i===active)return; active=i; chaps.forEach((c,j)=>c.classList.toggle('on',j===i));}
+  const dots=document.getElementById('dots'); chaps.forEach(()=>dots.appendChild(document.createElement('i'))); dots.firstChild.classList.add('on');
+  function setChap(i){if(i===active)return; active=i; chaps.forEach((c,j)=>c.classList.toggle('on',j===i)); [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===i));}
+
+  // Phone menu
+  const navEl=document.querySelector('.nav'), menubtn=document.getElementById('menubtn');
+  menubtn.addEventListener('click',()=>{const open=!navEl.classList.contains('open'); navEl.classList.toggle('open',open); menubtn.setAttribute('aria-expanded',String(open));});
+  navEl.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{navEl.classList.remove('open'); menubtn.setAttribute('aria-expanded','false');}));
   function setSport(i){if(i===cur)return; cur=i; sportBtns.forEach((b,j)=>{b.setAttribute('aria-current',String(j===i)); b.classList.toggle('done',j<i);});}
 
   function load(s){
