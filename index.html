@@ -266,10 +266,12 @@ p{margin:0}
 /* phones: a real menu instead of hidden links, a shorter scroll so the film moves at thumb speed, and chapter dots along the bottom */
 .menubtn{display:none}
 @media (max-width:760px){
-  .nav .in{justify-content:space-between; gap:10px}
+  .nav .in{justify-content:space-between; gap:8px; flex-wrap:wrap}
   .mark span{display:none}
-  .menubtn{all:unset; display:inline-flex; align-items:center; order:3; min-height:44px; padding:0 14px; border:1px solid rgba(255,255,255,.35); border-radius:4px; font-weight:600; font-size:14px; cursor:pointer}
-  .menubtn::before{content:""; width:16px; height:2px; margin-right:9px; background:currentColor; box-shadow:0 -5px 0 currentColor, 0 5px 0 currentColor}
+  .mark img{height:24px}
+  .callbtn{order:2; padding:0 14px; margin-left:auto}
+  .menubtn{all:unset; display:inline-flex; align-items:center; justify-content:center; order:3; width:44px; min-height:44px; border:1px solid rgba(255,255,255,.35); border-radius:4px; font-size:0; cursor:pointer}
+  .menubtn::before{content:""; width:18px; height:2px; background:currentColor; box-shadow:0 -6px 0 currentColor, 0 6px 0 currentColor}
   .menubtn[aria-expanded="true"]{background:var(--nightText); color:var(--night)}
   .nav nav{display:none; order:4; flex-basis:100%; flex-direction:column; gap:0; padding:6px 0 10px; border-top:1px solid rgba(255,255,255,.14)}
   .nav.open nav{display:flex}
